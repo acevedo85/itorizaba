@@ -1,0 +1,16 @@
+[{
+  "name": "Jorge Luis",
+  "apellido_paterno": "Acevedo",
+  "apellido_materno": "Carreón",
+  "numero_control": "10011153",
+  "img": "",
+  "password": "keikei8558"
+},
+  {
+    "name": "Daniel",
+    "apellido_paterno": "Oltehua",
+    "apellido_materno": "Montiel",
+    "numero_control": "10011154",
+    "img": "",
+    "password": "123456"
+  }]
