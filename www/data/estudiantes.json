@@ -1,16 +1,19 @@
 [{
-  "name": "Jorge Luis",
+  "name": "Jorge",
   "apellido_paterno": "Acevedo",
   "apellido_materno": "Carreón",
   "numero_control": "10011153",
-  "img": "",
-  "password": "keikei8558"
+  "img": "img/jorge.JPG",
+  "password": "keikei8558",
+  "carrera": "Ingenieria en Sistemas"
 },
   {
-    "name": "Daniel",
-    "apellido_paterno": "Oltehua",
-    "apellido_materno": "Montiel",
+    "name": "Gerardo",
+    "apellido_paterno": "Rosales",
+    "apellido_materno": "Morales",
     "numero_control": "10011154",
-    "img": "",
-    "password": "123456"
+    "img": "img/gerardo.png",
+    "password": "123456",
+    "carrera": "Ingenieria en Informatica"
   }]
+

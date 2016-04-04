@@ -1,25 +1,54 @@
-<ion-modal-view>
-    <ion-header-bar>
-        <h1 class="title">Registro</h1>
-        <div class="buttons">
-            <button class="button button-clear" ng-click="closeRegistro()">Close</button>
-        </div>
-    </ion-header-bar>
-    <ion-content>
-        <form ng-submit="doRegistro()">
-            <div class="list">
-                <label class="item item-input">
-                    <span class="input-label">Número de Control</span>
-                    <input type="text" ng-model="Data.username">
+<ion-view view-title="Registro">
+    <ion-nav-bar class="bar-positive">
+        <ion-nav-back-button class="button-stable button-clear">
+            <i class="ion-arrow-left-c"></i>
+        </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-content class="has-header">
+        <form  ng-submit="register.signup()">
+            <div class="list list-inset">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Nombre(s)</span>
+                    <input type="text"  placeholder="Nombre(s)" ng-model="register.firstName">
                 </label>
-                <label class="item item-input">
-                    <span class="input-label">Contraseña</span>
-                    <input type="password" ng-model="loginData.password">
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Apellido Paterno</span>
+                    <input type="text"  placeholder="Apellido Paterno" ng-model="register.lastName">
                 </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Apellido Materno</span>
+                    <input type="text"  placeholder="Apellido Materno" ng-model="register.apellidoMaterno">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Email</span>
+                    <input type="text"  placeholder="Email" ng-model="register.email">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Numero de Control</span>
+                    <input type="text" placeholder="Numero de Control" ng-model="register.numeroControl">
+                </label>
+                <label class="item item-input item-floating-label">
+                    <span class="input-label">Password</span>
+                    <input type="password" placeholder="Password" ng-model="register.password">
+                </label>
+                <div class="list">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            Carrera
+                        </div>
+                        <select ng-model="register.carrera">
+                            <option>Sistemas Computacionales</option>
+                            <option>Quimica</option>
+                            <option>Electronica</option>
+                        </select>
+                    </label>
+
+                </div>
                 <label class="item">
-                    <button class="button button-block button-positive" type="submit">Log in</button>
+                    <button class="button button-block button-positive" type="submit">Registro</button>
                 </label>
             </div>
         </form>
+
     </ion-content>
-</ion-modal-view>
+</ion-view>

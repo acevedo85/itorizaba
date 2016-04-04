@@ -1,0 +1,231 @@
+
+
+
+<ion-view view-title="Clases">
+
+    <div ng-if="vm.isWeekDay">
+        <ion-content class="padding has-header">
+            <div class="bar bar-header">
+                <h2 class="title">{{vm.getToday()}}</h2>
+                <span ng-click="vm.cancelWeekDay()" class="cancel-create">Cancelar</span>
+            </div>
+            <div class="bar bar-subheader">
+                <div class="list card" ng-repeat="object in vm.classes | orderBy: 'time_start'">
+                    <div class="item item-icon-right item-icon-left">
+                        <h2 class="text-center">{{object.clase}}</h2>
+                    </div>
+                    <div class="item item-body">
+                        Hora: {{object.time_start | date: 'shortTime'}} - {{object.time_end | date: 'shortTime'}}
+                    </div>
+                    <div class="item item-body">
+                        Lugar: {{object.classroom}}
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+
+    <div ng-if="!vm.isCreating && !vm.isEditing && !vm.isConfiguring && !vm.isShowing && !vm.isWeekDay">
+        <ion-content class="padding has-header">
+            <!-- LIST -->
+            <div class="bar bar-header">
+
+                <span ng-click="vm.getDayToday()"><i class="icon ion-calendar"> Hoy</i></span>
+                <span ng-click="vm.isCreating = true"><i class='icon ion-plus-round new-item'> Clase</i></span>
+            </div>
+            <div class="bar bar-subheader">
+            <div class="list card" ng-repeat="object in vm.data"
+                        ng-class="{'active':vm.isCurrent(object.id)}">
+                <div class="item item-icon-right item-icon-left">
+                    <i class="ion-compose icon" ng-click="vm.setEdited(object)"></i>
+                    <h2 class="text-center">{{object.name}}</h2>
+                    <i class="icon ion-close-round" ng-click="vm.delete(object.id)"></i>
+                </div>
+                <div class="item item-body">
+                    Maestro {{object.teacher}}
+                </div>
+                <div class="item item-icon-left">
+                    <i class="icon ion-clock" ng-click="vm.getDays(object)">
+                        <h3 class="text-left">Registrar por dia</h3>
+                    </i>
+                </div>
+            </div>
+        </div>
+        </ion-content>
+    </div>
+    <div ng-if="vm.isCreating">
+        <ion-content class="padding has-header">
+            <!-- CREATING -->
+            <div class="bar bar-header">
+                <h2 class="title">Crear Clase</h2>
+                <span ng-click="vm.cancelCreate()" class="cancel-create">Cancelar</span>
+            </div>
+            <div class="bar bar-subheader">
+                <form class="create-form" role="form"
+                      ng-submit="vm.create(vm.newObject)" novalidate>
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Materia</span>
+                            <input type="text" class="form-control"
+                                   ng-model="vm.newObject.name"
+                                   placeholder="Nombre de materia">
+                        </label>
+
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Profesor</span>
+                            <input type="text" class="form-control"
+                                   ng-model="vm.newObject.teacher"
+                                   placeholder="Nombre de profesor">
+                        </label>
+
+                        </label>
+                    </div>
+                    <button class="button button-block button-positive" type="submit">Agregar</button>
+                </form>
+            </div>
+        </ion-content>
+    </div>
+    <div ng-if="vm.isEditing && !vm.isCreating">
+        <ion-content class="padding has-header">
+            <!-- EDITING -->
+            <div class="bar bar-header bar-secondary">
+                <h1 class="title">Editando {{vm.edited.name}}</h1>
+                <span ng-click="vm.cancelEditing()" class="cancel-create">Cancel</span>
+            </div>
+            <div class="bar bar-subheader">
+                <form class="edit-form" role="form"
+                      ng-submit="vm.update(vm.edited)" novalidate>
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Materia</span>
+                            <input type="text" class="form-control"
+                                   ng-model="vm.edited.name"
+                                   placeholder="Edita nombre de materia"/>
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Profesor</span>
+                            <input type="text" class="form-control"
+                                   ng-model="vm.edited.teacher"
+                                   placeholder="Nombre de profesor">
+                        </label>
+                    </div>
+                    <button class="button button-block button-positive" type="submit">Guardar</button>
+                </form>
+            </div>
+        </ion-content>
+    </div>
+
+    <div ng-if="vm.isConfiguring">
+        <ion-content class="padding has-header">
+            <!-- AGREGANDO DIAS -->
+            <div class="bar bar-header">
+                <h2 class="title">{{vm.configured.name}}</h2>
+                <span ng-click="vm.cancelConfig()" class="cancel-create">Cancelar</span>
+            </div>
+            <div class="bar bar-subheader">
+                <form class="create-form" role="form"
+                      ng-submit="vm.createDay(vm.newDay, vm.configured)" novalidate>
+                    <div class="list">
+                        <div class="list">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    Día
+                                </div>
+                                <select ng-model="vm.newDay.name">
+                                    <option>Lunes</option>
+                                    <option>Martes</option>
+                                    <option>Miercoles</option>
+                                    <option>Jueves</option>
+                                    <option>Viernes</option>
+                                </select>
+                            </label>
+                        </div>
+                        <label class="item item-input">
+                            <span class="input-label">Inicio</span>
+                            <input ng-model="vm.newDay.time_start" type="time">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Fin</span>
+                            <input ng-model="vm.newDay.time_end" type="time">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Salón o Laboratorio</span>
+                            <input ng-model="vm.newDay.classroom" type="text" >
+                        </label>
+                    </div>
+                    <button class="button button-block button-positive" type="submit">Guardar</button>
+                </form>
+            </div>
+        </ion-content>
+    </div>
+
+    <div ng-if="vm.isShowing && !vm.isConfiguring && !vm.isEditingDays">
+        <ion-content class="padding has-header">
+            <!-- DAYS DETAILS -->
+            <div class="bar bar-header">
+                <a class="button icon-left ion-chevron-left button-clear button-dark" ng-click="vm.cancelShowing()"></a>
+                <span ng-click="vm.setConfig(vm.edited)"><i class='icon ion-plus-round new-item'> Dias</i></span>
+            </div>
+            <div class="bar bar-subheader">
+                <div class="list card" ng-repeat="object in vm.days | orderBy: 'name'"
+                     ng-class="{'active':vm.isCurrent(object.id)}">
+                    <div class="item item-icon-right item-icon-left">
+                        <i class="ion-compose icon" ng-click="vm.setEditedDays(object)"></i>
+                            <h2 class="text-center">{{vm.inverseDayConvert(object.name)}}</h2>
+                        <i class="icon ion-close-round" ng-click="vm.deleteDay(object)"></i>
+                    </div>
+                    <div class="item item-body">
+                        Hora: {{object.time_start | date: 'shortTime'}} - {{object.time_end | date: 'shortTime'}}
+                    </div>
+                    <div class="item item-body">
+                        Lugar: {{object.classroom}}
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+    <div ng-if="vm.isEditingDays && !vm.isConfiguring">
+        <ion-content class="padding has-header">
+            <!-- EDITING DAY-->
+            <div class="bar bar-header bar-secondary">
+                <h1 class="title">Editando {{vm.edited.num}}</h1>
+                <span ng-click="vm.cancelEditingDays()" class="cancel-create">Cancel</span>
+            </div>
+            <div class="bar bar-subheader">
+                <form class="edit-form" role="form"
+                      ng-submit="vm.updateDays(vm.edited)" novalidate>
+                    <div class="list">
+                        <div class="list">
+                            <label class="item item-input item-select">
+                                <div class="input-label">
+                                    Día
+                                </div>
+                                <select ng-model="vm.edited.name">
+                                    <option>Lunes</option>
+                                    <option>Martes</option>
+                                    <option>Miercoles</option>
+                                    <option>Jueves</option>
+                                    <option>Viernes</option>
+                                </select>
+                            </label>
+                        </div>
+                        <label class="item item-input">
+                            <span class="input-label">Inicio</span>
+                            <input ng-model="vm.edited.time_start" type="time" placeholder="Edita hora inicio">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Fin</span>
+                            <input ng-model="vm.edited.time_end" type="time" placeholder="Edita hora final">
+                        </label>
+                        <label class="item item-input">
+                            <span class="input-label">Salón</span>
+                            <input ng-model="vm.edited.classroom" type="text" placeholder="Edita salón o laboratorio">
+                        </label>
+                    </div>
+                    <button class="button button-block button-positive" type="submit">Guardar</button>
+                </form>
+            </div>
+        </ion-content>
+    </div>
+</ion-view>
+

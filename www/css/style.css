@@ -1,5 +1,9 @@
+* {
+    font-family: Roboto, Microsoft Sans Serif, Geneva, sans-serif;
+}
+
 .splash-page {
-    background:url(/img/xubuntu-gdm-background.png);
+    background-color: #007aff;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -12,7 +16,6 @@
     margin-top:10px;
     text-align:center;
     color:#fff !important;
-    font-family: Verdana, Geneva, sans-serif;
     font-weight:bold;
     letter-spacing: -3px;
     font-size:42px;
@@ -46,6 +49,15 @@
     height: 128px;
     overflow: hidden;
 }
+#profile-image {
+    display: block;
+    border-radius: 100px;
+    border: 1px solid #fff;
+    width: 128px;
+    height: 128px;
+    margin: 30px auto 0;
+    box-shadow: 0px 0px 4px rgba(0,0,0,0.7);
+}
 
 .profile-picture img {
     width: 128px;
@@ -57,4 +69,53 @@
     font-size: x-large !important;
     font-weight: bold !important;
     text-transform: capitalize;
+}
+.failure {
+    display: none;
+    text-align: left;
+    font-weight: bold;
+    color: red;
+    padding-bottom: 10px;
+}
+
+.icon.new-item {
+    position: absolute;
+    right: 20px;
+    font-size: 20px;
+    bottom: 13px;
+}
+.cancel-create {
+    position: absolute;
+    right: 20px;
+    font-size: 14px;
+    bottom: 13px;
+    color:#ef4e3a;
+}
+[ng-click], [data-ng-click], [x-ng-click] {
+    cursor: pointer;
+}
+/* Ionic Overwrite! */
+.item-icon-left .icon, .item-icon-right .icon {
+    font-size: 22px;
+}
+.face {
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    display: inline-block;
+    margin: 4px 16px;
+    vertical-align: middle;
+    width: 48px;
+}
+.google-maps {
+    position: relative;
+    padding-bottom: 200%;
+    height: 0;
+    overflow: hidden;
+}
+.google-maps iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
 }
