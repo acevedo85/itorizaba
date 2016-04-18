@@ -1,6 +1,6 @@
 
 angular.module('starter.controllers', [])
-    .controller('LoginCtrl', function (Backand,  $state, LoginService, $rootScope, $ionicPopup, ConnectivityMonitor, $ionicPopup) {
+    .controller('LoginCtrl', function (Backand,  $state, LoginService, $rootScope, $ionicPopup, ConnectivityMonitor, FileService) {
         var login = this;
 
         function signin(){
@@ -29,7 +29,7 @@ angular.module('starter.controllers', [])
         function onLogin(){
             login.usuario = LoginService.currentUser;
             $rootScope.$broadcast('authorized');
-            $state.go('app.perfil')
+            $state.go('app.perfil');
         }
 
         login.usuario = "";
@@ -61,7 +61,7 @@ angular.module('starter.controllers', [])
 
     })
 
-    .controller('PerfilCtrl', function ($ionicHistory, $cordovaCamera, $http, Backand, $state, LoginService, UserService, $rootScope, $scope, $cordovaDevice, $cordovaFile, $ionicPlatform, $cordovaEmailComposer, $ionicActionSheet) {
+    .controller('PerfilCtrl', function ($timeout, $stateParams,$ionicLoading, FileService, ImageService, $ionicHistory, $cordovaCamera, $http, Backand, $state, LoginService, UserService, $rootScope, $scope, $cordovaDevice, $cordovaFile, $ionicPlatform, $ionicActionSheet) {
         var login = this;
 
         var baseUrl = '/1/objects/';
@@ -96,82 +96,79 @@ angular.module('starter.controllers', [])
             });
         }
 
-        function optionsForType(type) {
-            var source;
-            switch (type) {
-                case 0:
-                    source = Camera.PictureSourceType.CAMERA;
-                    break;
-                case 1:
-                    source = Camera.PictureSourceType.PHOTOLIBRARY;
-                    break;
-            }
-            return {
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: source,
-                allowEdit: false,
-                encodingType: Camera.EncodingType.JPEG,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false,
-                correctOrientation: true
-            };
+        //commented for web emulator
+        //$ionicPlatform.ready(function () {
+        //refreshImg();
+        //});
+        //
+        //function refreshImg(){
+        //    $scope.images = FileService.images();
+        //    console.log(cordova.file.dataDirectory + $scope.images);
+        //
+        //        if ($scope.images == []){
+        //            $scope.urlForImage = 'img/noprofile.jpg';
+        //        }
+        //        else {
+        //            $scope.urlForImage =  cordova.file.dataDirectory + $scope.images;
+        //        }
+        //
+        //    $scope.$apply();
+        //}
+
+
+
+        $scope.addMedia = function () {
+            $scope.hideSheet = $ionicActionSheet.show({
+                buttons: [
+                    { text : 'Tomar Foto'},
+                    { text : 'Foto de Galeria'}
+                ],
+                titleText: 'Agregar imagen',
+                cancelText: 'Cancelar',
+                buttonClicked: function (index) {
+                    $scope.addImage(index);
+                }
+            });
         }
 
         $scope.addImage = function (type) {
-
-            var options = optionsForType(type);
-
-            $cordovaCamera.getPicture(options).then(function (imageURI) {
-                $scope.hideSheet();
-                $scope.imageUrl = imageURI;
-                $scope.apply();
-                
-            })
-            
+            $scope.hideSheet();
+            ImageService.handleMediaDialog(type).then(function () {
+          //  refreshImg();
+            });
         }
-
-        $scope.addMedia = function () {
-                $scope.hideSheet = $ionicActionSheet.show({
-                    buttons: [
-                        {text: 'Tomar Foto'},
-                        {text: 'Foto de Galeria'}
-                    ],
-                    titleText: 'Agregar Imagen',
-                    cancelText: 'Cancelar',
-                    buttonClicked: function (index) {
-                        $scope.addImage(index)
-                    }
-                });
-            };
-
-        function makeid() {
-            var text = '';
-            var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-            for (var i = 0; i < 5; i++) {
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
-            }
-            return text;
-        };
 
          UserService.getByEmail(LoginService.currentUser.details.username)
              .then(function (response) {
                  login.currentUser = response.data.data[0];
         });
         function signout(){
-            LoginService.signout()
-                .then(function () {
-                    //$state.go('splash');
-                    $rootScope.$broadcast('logout');
-                    $ionicHistory.clearHistory();
-                    $state.go('splash', {}, {reload: true});
+            $ionicLoading.show({
+                template: 'Cerrando sesion...'
+            });
+            $timeout(function () {
+                LoginService.signout()
+                    .then(function () {
+                        //$state.go('splash');
+                        $ionicLoading.hide();
+                        $rootScope.$broadcast('logout');
+                        $ionicHistory.clearCache();
+                        $ionicHistory.clearHistory();
+                        $ionicHistory.nextViewOptions({
+                            disableBack: 'true',
+                            historyRoot: 'true'
+                        });
+                        $state.go('splash', {}, {reload: true});
 
 
-                }, function (error) {
-                    alert(error);
-                })
+                    }, function (error) {
+                        alert(error);
+                    })
+            }, 1000);
+
         }
         login.signout = signout;
+       // login.refreshImg = refreshImg;
 
     })
     .controller('AgendaCtrl', function (EventService, $rootScope, DaysService) {

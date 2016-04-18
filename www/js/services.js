@@ -203,8 +203,10 @@ angular.module('starter.services', ['backand'])
     };
 
     function addImage(img){
-        images.pop();
+        //images.pop();
+        images = [];
         images.push(img);
+        window.localStorage.clear();
         window.localStorage.setItem(IMAGE_STORAGE_KEY, JSON.stringify(images));
     };
 
@@ -213,7 +215,6 @@ angular.module('starter.services', ['backand'])
         images: getImages
     }
 })
-    .service('')
 .factory('ImageService', function ($cordovaCamera, FileService, $q, $cordovaFile) {
    // var currentImage = this;
 
@@ -243,7 +244,8 @@ angular.module('starter.services', ['backand'])
             allowEdit: false,
             encodingType: Camera.EncodingType.JPEG,
             popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
+            saveToPhotoAlbum: false,
+            correctOrientation: true
         };
     }
 

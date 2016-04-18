@@ -37,6 +37,11 @@
     text-align: center;
 }
 
+.side-item {
+    text-align: center;
+    background-color: #00b8d4;
+}
+
 .profile-picture {
     border: 1px solid rgba(0, 0, 0, 0.25);
     padding: 3px;
@@ -101,10 +106,19 @@
 .face {
     border-radius: 30px;
     border: 1px solid #ddd;
-    display: inline-block;
+    display: inline;
     margin: 4px 16px;
     vertical-align: middle;
     width: 48px;
+}
+
+.escudo {
+    border-radius: 30px;
+    border: 0px transparent;
+    display: inline;
+    margin: 4px 16px;
+    vertical-align: middle;
+    width: 68px;
 }
 .google-maps {
     position: relative;
@@ -118,4 +132,9 @@
     left: 0;
     width: 100% !important;
     height: 100% !important;
+}
+
+.custom {
+    color: white;
+    background-color: #00b0ff !important;
 }
