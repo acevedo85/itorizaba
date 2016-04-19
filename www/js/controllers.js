@@ -64,7 +64,8 @@ angular.module('starter.controllers', [])
     .controller('PerfilCtrl', function ($timeout, $stateParams,$ionicLoading, FileService, ImageService, $ionicHistory, $cordovaCamera, $http, Backand, $state, LoginService, UserService, $rootScope, $scope, $cordovaDevice, $cordovaFile, $ionicPlatform, $ionicActionSheet) {
         var login = this;
 
-        var baseUrl = '/1/objects/';
+        //Backand file upload
+/*        var baseUrl = '/1/objects/';
         var baseActionUrl = baseUrl + 'action/';
         var objectName = 'users';
         var filesActionName = 'files';
@@ -94,26 +95,26 @@ angular.module('starter.controllers', [])
                     "filedata": filedata.substr(filedata.indexOf(',') + 1, filedata.length) //need to remove the file prefix type
                 }
             });
-        }
+        }*/
 
-        //commented for web emulator
-        //$ionicPlatform.ready(function () {
-        //refreshImg();
-        //});
-        //
-        //function refreshImg(){
-        //    $scope.images = FileService.images();
-        //    console.log(cordova.file.dataDirectory + $scope.images);
-        //
-        //        if ($scope.images == []){
-        //            $scope.urlForImage = 'img/noprofile.jpg';
-        //        }
-        //        else {
-        //            $scope.urlForImage =  cordova.file.dataDirectory + $scope.images;
-        //        }
-        //
-        //    $scope.$apply();
-        //}
+       // comment for web emulator
+        $ionicPlatform.ready(function () {
+        refreshImg();
+        });
+
+        function refreshImg(){
+            $scope.images = FileService.images();
+            console.log(cordova.file.dataDirectory + $scope.images);
+
+                if ($scope.images == []){
+                    $scope.urlForImage = 'img/noprofile.jpg';
+                }
+                else {
+                    $scope.urlForImage =  cordova.file.dataDirectory + $scope.images;
+                }
+
+            $scope.$apply();
+        }
 
 
 
@@ -134,7 +135,7 @@ angular.module('starter.controllers', [])
         $scope.addImage = function (type) {
             $scope.hideSheet();
             ImageService.handleMediaDialog(type).then(function () {
-          //  refreshImg();
+            refreshImg();
             });
         }
 

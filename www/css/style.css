@@ -3,7 +3,7 @@
 }
 
 .splash-page {
-    background-color: #007aff;
+    background-color: #0277bd;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -55,9 +55,9 @@
     overflow: hidden;
 }
 #profile-image {
-    display: block;
+    display: inline;
     border-radius: 100px;
-    border: 1px solid #fff;
+    vertical-align: middle;
     width: 128px;
     height: 128px;
     margin: 30px auto 0;
@@ -104,7 +104,7 @@
     font-size: 22px;
 }
 .face {
-    border-radius: 30px;
+    border-radius: 20px;
     border: 1px solid #ddd;
     display: inline;
     margin: 4px 16px;
@@ -113,8 +113,7 @@
 }
 
 .escudo {
-    border-radius: 30px;
-    border: 0px transparent;
+
     display: inline;
     margin: 4px 16px;
     vertical-align: middle;

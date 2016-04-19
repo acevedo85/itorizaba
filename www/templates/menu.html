@@ -19,40 +19,40 @@
     <ion-content>
       <ion-list>
         <ion-item class="profile-item">
-          <img ng-src="img/instituto_tecnologico_de_orizaba.jpg" class="escudo" alt="not available">
-          <h3 class="profile-name">I  T  O</h3>
+          <img ng-src="img/itologo.png" class="escudo" alt="not available">
+          <h3 class="profile-name" style="color: #0277bd">I  T  O</h3>
         </ion-item>
-        <ion-item menu-close href="#/app/perfil">
-          <img ng-src="{{urlForImage}}" class="face" alt="n/a">
-         {{perfil.currentUser.firstName}} {{perfil.currentUser.lastName}}
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/perfil">
+          <i style="color: #0277bd" class="icon ion-person"></i>
+         &nbsp {{perfil.currentUser.firstName}} {{perfil.currentUser.lastName}}
         </ion-item>
-        <ion-item menu-close href="#/app/agenda">
-          <i class="icon ion-university">   </i>
-          Clases
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/agenda">
+          <i style="color: #0277bd" class="icon ion-university"></i>
+          &nbsp Clases
         </ion-item>
-        <ion-item menu-close href="#/app/map">
-          <i class="icon ion-map">   </i>
-          Mapa
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/map">
+          <i style="color: #0277bd" class="icon ion-map"></i>
+          &nbsp Mapa
         </ion-item>
-        <ion-item menu-close href="#/app/anuncios">
-          <i class="icon ion-speakerphone">   </i>
-          Anuncios
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/anuncios">
+          <i style="color: #0277bd" class="icon ion-speakerphone"></i>
+          &nbsp Anuncios
         </ion-item>
-        <ion-item menu-close href="#/app/tecbox">
-          <i class="icon ion-cloud">   </i>
-          TecBox
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/tecbox">
+          <i style="color: #0277bd" class="icon ion-cloud"></i>
+          &nbsp TecBox
         </ion-item>
-        <ion-item menu-close href="#/app/biblio">
-          <i class="icon ion-ios-book">   </i>
-          Biblioteca
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/biblio">
+          <i style="color: #0277bd" class="icon ion-ios-book"></i>
+          &nbsp Biblioteca
         </ion-item>
-        <ion-item menu-close href="#/app/store">
-          <i class="icon ion-bag">   </i>
-          Buho-Store
+        <ion-item item-type="item-icon-left" nav-clear menu-close href="#/app/store">
+          <i style="color: #0277bd" class="icon ion-bag"></i>
+          &nbsp Buho-Store
         </ion-item>
-        <ion-item menu-close ng-click="perfil.signout()">
-          <i class="icon ion-power">   </i>
-          Cerrar Sesion
+        <ion-item item-type="item-icon-left" nav-clear menu-close ng-click="perfil.signout()">
+          <i style="color: #0277bd" class="icon ion-power"></i>
+          &nbsp Cerrar Sesion
         </ion-item>
       </ion-list>
     </ion-content>

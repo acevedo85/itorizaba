@@ -241,8 +241,10 @@ angular.module('starter.services', ['backand'])
         return {
             destinationType: Camera.DestinationType.FILE_URI,
             sourceType: source,
-            allowEdit: false,
+            allowEdit: true,
             encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 200,
+            targetHeight: 200,
             popoverOptions: CameraPopoverOptions,
             saveToPhotoAlbum: false,
             correctOrientation: true
@@ -255,8 +257,9 @@ angular.module('starter.services', ['backand'])
 
             $cordovaCamera.getPicture(options).then(function (imageUrl) {
                 var name = imageUrl.substr(imageUrl.lastIndexOf('/') + 1);
-                var namePath = imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
+                var namePath =  imageUrl.substr(0, imageUrl.lastIndexOf('/') + 1);
                 var newName = makeid() + name;
+
 
                // currentImage = newName;
                 $cordovaFile.copyFile(namePath, name, cordova.file.dataDirectory, newName)
