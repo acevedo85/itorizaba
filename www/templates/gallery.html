@@ -1,0 +1,25 @@
+<ion-view view-title="Galeria">
+  <ion-content class="has-header padding">
+    <br><br>
+
+    <div class="item item-divider">
+      <i class="ion-images"></i>
+      Instituto Tecnologico de Orizaba
+    </div>
+
+    <ion-list>
+      <ion-item ng-repeat="image in allImages" class="item-thumbnail-left">
+        <img  ng-src="{{image.src}}" ng-click="showImages($index)">
+        <h2>{{image.titulo}}</h2>
+        <p>{{image.descripcion}}</p>
+      </ion-item>
+    </ion-list>
+
+   <!-- <a class="item item-list-detail">
+      <ion-scroll direction="x">
+        <img ng-repeat="image in allImages" ng-src="{{image.src}}" ng-click="showImages($index)" class="image-list-thumb"/>
+      </ion-scroll>
+    </a>-->
+
+  </ion-content>
+</ion-view>

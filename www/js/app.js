@@ -1,16 +1,15 @@
 // Ionic Starter App
 
-angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'ngResource', 'backand', 'ngCordova'])
+angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 'starter.services', 'ngResource', 'backand', 'ngCordova', 'ionic.cloud'])
 
-    .run(function($ionicPlatform) {
+    .run(function($ionicPlatform, $ionicPush) {
+
       $ionicPlatform.ready(function() {
-          var push = new Ionic.Push({
-              "debug": true
-          });
-          push.register(function (token) {
-              console.log("Device Token:", token.token);
-              push.saveToken(token);  // persist the token in the Ionic Platform
-          });
+        $ionicPush.register().then(function(t) {
+          return $ionicPush.saveToken(t);
+        }).then(function(t) {
+          console.log('Token saved:', t.token);
+        });
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
         // for form inputs)
         if (window.cordova && window.cordova.plugins.Keyboard) {
@@ -25,12 +24,29 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       });
     })
 
-.config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function(BackandProvider, $stateProvider, $urlRouterProvider, $httpProvider, $ionicCloudProvider) {
 
   BackandProvider.setAppName('itorizaba');
   BackandProvider.setSignUpToken('edcdd69c-dee4-45f2-a287-da8293b4fb40');
   BackandProvider.setAnonymousToken('7836f930-b1eb-44b7-bd7e-f154f1b878b3');
 
+  $ionicCloudProvider.init({
+    "core": {
+      "app_id": "fbca80c2"
+    },
+    "push": {
+      "sender_id" : "539629649105",
+      "pluginConfig": {
+        "ios": {
+          "badge": true,
+          "sound": true
+        },
+        "android": {
+          "iconColor" : '#e6b500'
+        }
+      }
+    }
+  });
 
 
   $stateProvider
@@ -75,7 +91,16 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
           }
         }
       })
-          .state('app.anuncios', {
+    .state('app.web', {
+      url: '/web',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/web.html',
+          controller: 'WebCtrl as vm'
+        }
+      }
+    })
+      .state('app.anuncios', {
             url: '/anuncios',
             views: {
               'menuContent': {
@@ -83,7 +108,16 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
               }
             }
           })
-              .state('app.tecbox', {
+    .state('app.gallery', {
+      url: '/gallery',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/gallery.html',
+          controller: 'GalleryCtrl as gallery'
+        }
+      }
+    })
+      .state('app.tecbox', {
                 url: '/tecbox',
                 views: {
                   'menuContent': {
@@ -91,7 +125,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
                   }
                 }
               })
-                  .state('app.biblio', {
+      .state('app.biblio', {
                     url: '/biblio',
                     views: {
                       'menuContent': {
@@ -107,7 +141,7 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
           }
         }
       })
-    .state('app', {
+      .state('app', {
     url: '/app',
     abstract: true,
     templateUrl: 'templates/menu.html'
@@ -142,6 +176,10 @@ angular.module('starter', ['ionic','ionic.service.core', 'starter.controllers', 
       unauthorized();
     }
   });
+  $rootScope.$on('cloud:push:notification', function (event, data) {
+    var msg = data.message;
+    alert(msg.title + ': ' + msg.text);
+  })
 })
     .factory('ConnectivityMonitor', function($rootScope, $cordovaNetwork){
 

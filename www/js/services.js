@@ -1,5 +1,5 @@
 /**
- * Created by Academia on 1/4/2016.
+ * Created by Acevedo on 1/4/2016.
  */
 
 angular.module('starter.services', ['backand'])
@@ -14,7 +14,7 @@ angular.module('starter.services', ['backand'])
             return $q.reject(response);
         };
     })
-
+    //Service created to handle the login
     .service('LoginService', function (Backand) {
         var service = this;
         service.currentUser = {};
@@ -171,7 +171,7 @@ angular.module('starter.services', ['backand'])
       service.create = function (object) {
           return $http.post(getUrl(), object);
       };
-      
+
       service.getByEmail = function (email) {
           return $http({
               method: "GET",
@@ -216,18 +216,14 @@ angular.module('starter.services', ['backand'])
     }
 })
 .factory('ImageService', function ($cordovaCamera, FileService, $q, $cordovaFile) {
-   // var currentImage = this;
-
     function makeid() {
         var text = '';
         var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
         for (var i = 0; i < 5; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
         return text;
     };
-
     function optionsForType(type) {
         var source;
         switch (type) {
@@ -250,7 +246,6 @@ angular.module('starter.services', ['backand'])
             correctOrientation: true
         };
     }
-
     function saveMedia(type) {
         return $q(function (resolve, reject) {
             var options = optionsForType(type);
